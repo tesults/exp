@@ -1,5 +1,5 @@
 {
-  "name": "exp",
+  "name": "exp-tf",
   "version": "0.0.0",
   "description": "EXP Test Framework",
   "main": "exp.js",
@@ -7,7 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "exp"
+    "exp",
+    "exp-tf",
+    "test",
+    "framework"
   ],
   "author": "Ajeet Dhaliwal",
   "license": "MIT",
