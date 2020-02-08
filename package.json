@@ -17,6 +17,10 @@
   "bin": {
     "exp": "./cli.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tesults/exp.git"
+  },
   "dependencies": {
     "tesults": "^1.1.0",
     "uuid": "^3.4.0"
