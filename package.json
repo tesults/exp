@@ -1,0 +1,21 @@
+{
+  "name": "exp",
+  "version": "0.0.0",
+  "description": "EXP Test Framework",
+  "main": "exp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "exp"
+  ],
+  "author": "Ajeet Dhaliwal",
+  "license": "MIT",
+  "bin": {
+    "exp": "./cli.js"
+  },
+  "dependencies": {
+    "tesults": "^1.1.0",
+    "uuid": "^3.4.0"
+  }
+}
