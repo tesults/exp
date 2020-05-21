@@ -1,6 +1,6 @@
 # EXP Test Framework
 
-EXP is a new test framework from Tesults. Visit https://www.tesults.com/exp for complete details about EXP was created and how to use it.
+EXP is a new test framework from Tesults. Visit https://www.tesults.com/exp for complete details about EXP and how to use it.
 
 ## Installation
 
