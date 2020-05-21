@@ -113,6 +113,7 @@ const recordResult = function () {
     try {
         totals.total += 1;
         let testCase = testFile.context;
+        testCase.end = Date.now();
         if (testCase.result === undefined) {
             testCase.result = "pass";
             totals.pass += 1;
@@ -189,6 +190,7 @@ const runGuarded = async function (func, isAsync) {
 const runTest = async function () {
     try {
         let testCase = testFile.context;
+        testFile.context.start = Date.now();
         module.exports.log("Start Test Name: " + testCase.name + ", Suite: " + (testCase.suite === undefined? "" : testCase.suite));
         if (testCase.test === undefined) {
             throw 'No test function in test case';
