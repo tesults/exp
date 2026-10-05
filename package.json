@@ -1,10 +1,16 @@
 {
   "name": "exp-tf",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "EXP Test Framework",
   "main": "exp.js",
+  "files": [
+    "cli.js",
+    "exp.js"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/test.js",
+    "test:packed": "node test/packed.js",
+    "prepack": "npm test"
   },
   "keywords": [
     "exp",
@@ -13,6 +19,13 @@
     "framework"
   ],
   "author": "Ajeet Dhaliwal",
+  "contributors": [
+    {
+      "name": "Ajeet Dhaliwal",
+      "email": "ajeet.dhaliwal@tesults.com",
+      "url": "https://github.com/ajeetd"
+    }
+  ],
   "license": "MIT",
   "bin": {
     "exp": "./cli.js"
@@ -22,7 +35,7 @@
     "url": "https://github.com/tesults/exp.git"
   },
   "dependencies": {
-    "tesults": "^1.1.0",
-    "uuid": "^3.4.0"
+    "tesults": "^1.2.1",
+    "uuid": "^11.1.1"
   }
 }

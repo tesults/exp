@@ -2,8 +2,9 @@
 const fs = require('fs');
 const path = require('path');
 const tesults = require('tesults');
-const uuidv5 = require("uuid/v5");
+const uuidv5 = require('uuid').v5;
 const util = require("util");
+const packageInfo = require('./package.json');
 
 // Args
 module.exports.dirs = [];
@@ -20,6 +21,28 @@ let totals = {total: 0, pass: 0, fail: 0, unknown: 0};
 let suiteTimeout = defaultTimeout;
 let started = false;
 let testFile = undefined;
+
+const metadata = {
+    integration_name: packageInfo.name,
+    integration_version: packageInfo.version,
+    test_framework: 'exp'
+};
+
+// Writes the final Tesults payload for GitHub Actions reporting.
+const writeOutput = function (data) {
+    const outputFile = process.env.TESULTS_OUTPUT_FILE;
+    if (typeof outputFile !== 'string' || outputFile.length === 0) {
+        return;
+    }
+
+    try {
+        fs.mkdirSync(path.dirname(outputFile), {recursive: true});
+        fs.writeFileSync(outputFile, JSON.stringify(data, null, 2));
+        module.exports.log('Tesults results written to ' + outputFile);
+    } catch (err) {
+        module.exports.log('Error writing Tesults results: ' + err);
+    }
+};
 
 // Creates as hash to use for test file saving
 const hash = function () {
@@ -359,13 +382,21 @@ module.exports.start = async function () {
     module.exports.log("Unknown: " + totals.unknown);
     module.exports.log("Total: " + totals.total);
     
-    if (module.exports.tesults.target !== undefined) {
+    const targetEnabled = module.exports.tesults.target !== undefined;
+    const outputEnabled = typeof process.env.TESULTS_OUTPUT_FILE === 'string' && process.env.TESULTS_OUTPUT_FILE.length > 0;
+    const data = {
+        target: targetEnabled ? module.exports.tesults.target : '',
+        results: results,
+        metadata: metadata
+    };
+
+    if (outputEnabled) {
+        writeOutput(data);
+    }
+
+    if (targetEnabled) {
         module.exports.log("Tesults results upload in progress...");
-        
-        const data = {
-            target: module.exports.tesults.target,
-            results: results
-        }
+
         tesults.results(data, function (err, response) {
             module.exports.log("Tesults results upload complete");
             if (err) {
@@ -379,6 +410,9 @@ module.exports.start = async function () {
                 process.exit(0);
             }
         });
+    } else if (outputEnabled) {
+        module.exports.log("Tesults upload disabled");
+        process.exit(0);
     } else {
         module.exports.log("Tesults disabled");
         process.exit(0);
